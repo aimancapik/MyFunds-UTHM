@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "371473838062",
+    "firebase_url": "https://authfirebase-7d921-default-rtdb.firebaseio.com",
+    "project_id": "authfirebase-7d921",
+    "storage_bucket": "authfirebase-7d921.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371473838062:android:7afe4be8bc31095978e8ff",
+        "android_client_info": {
+          "package_name": "com.aiman.syafiq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371473838062-mtp7u9s8o4e7klld7u2e09h54sptil3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY_PxFBxvr6bhEBCVfF0VglTQlHgdcN6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371473838062-mtp7u9s8o4e7klld7u2e09h54sptil3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
