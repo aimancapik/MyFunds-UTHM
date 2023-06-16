@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../routes/routes.dart';
 import '../../../theme/app_color.dart';
-import '../../widgets/authentication/signup_form.dart';
+import 'signup_form.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen();
@@ -59,7 +59,7 @@ class SignupScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Already have an account? ',
+                                  'Already have account? ',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -82,6 +82,32 @@ class SignupScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 24.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(
+                          16.r,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColor.kPrimaryColor.withOpacity(
+                              0.5,
+                            ),
+                            offset: Offset(
+                              0,
+                              2.h,
+                            ),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                      child: SignupForm(),
                     ),
                   ],
                 ),
