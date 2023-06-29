@@ -1,3 +1,6 @@
-# Flutter Crowdfinding/Charity App Ui
+Fundraising application
+
+(MyFunds UTHM)
+
 
 
