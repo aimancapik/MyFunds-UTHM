@@ -78,7 +78,7 @@ class Selection extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'My Charity',
+                      'My Campaign',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

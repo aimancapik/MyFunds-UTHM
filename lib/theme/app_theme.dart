@@ -21,14 +21,14 @@ class AppTheme {
           padding: MaterialStateProperty.all(
             EdgeInsets.symmetric(
               horizontal: 16.w,
-              vertical: 8.h,
+              vertical: 16.h,
             ),
           ),
           foregroundColor: MaterialStateProperty.all(
             Colors.white,
           ),
           backgroundColor: MaterialStateProperty.all(
-            AppColor.kAccentColor,
+            const Color.fromARGB(255, 0, 0, 0),
           ),
           elevation: MaterialStateProperty.all(0),
           shape: MaterialStateProperty.all(
@@ -45,9 +45,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all(
-            AppColor.kAccentColor,
-          ),
+          foregroundColor: MaterialStateProperty.all(Colors.blueAccent),
           minimumSize: MaterialStateProperty.all(
             Size(0, 56.h),
           ),
@@ -98,8 +96,6 @@ class AppTheme {
           ),
         ),
       ),
-      
     );
-    
   }
 }

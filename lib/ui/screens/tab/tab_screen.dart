@@ -81,7 +81,7 @@ class _TabScreenState extends State<TabScreen> {
                   child: SvgPicture.asset(
                     'assets/images/category.svg',
                     width: 24.w,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -89,7 +89,7 @@ class _TabScreenState extends State<TabScreen> {
               icon: SvgPicture.asset(
                 'assets/images/category.svg',
                 width: 24.w,
-                color: AppColor.kTextColor1,
+                // color: AppColor.kTextColor1,
               ),
             ),
             BottomNavigationBarItem(
@@ -104,7 +104,7 @@ class _TabScreenState extends State<TabScreen> {
                   child: SvgPicture.asset(
                     'assets/images/search.svg',
                     width: 24.w,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -112,7 +112,7 @@ class _TabScreenState extends State<TabScreen> {
               icon: SvgPicture.asset(
                 'assets/images/search.svg',
                 width: 24.w,
-                color: AppColor.kTextColor1,
+                // color: AppColor.kTextColor1,
               ),
             ),
             BottomNavigationBarItem(
@@ -167,7 +167,7 @@ class _TabScreenState extends State<TabScreen> {
                   child: SvgPicture.asset(
                     'assets/images/swap.svg',
                     width: 24.w,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -175,7 +175,7 @@ class _TabScreenState extends State<TabScreen> {
               icon: SvgPicture.asset(
                 'assets/images/swap.svg',
                 width: 24.w,
-                color: AppColor.kTextColor1,
+                // color: AppColor.kTextColor1,
               ),
             ),
             BottomNavigationBarItem(
@@ -190,7 +190,7 @@ class _TabScreenState extends State<TabScreen> {
                   child: SvgPicture.asset(
                     'assets/images/profile.svg',
                     width: 24.w,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -198,7 +198,7 @@ class _TabScreenState extends State<TabScreen> {
               icon: SvgPicture.asset(
                 'assets/images/profile.svg',
                 width: 24.w,
-                color: AppColor.kTextColor1,
+                // color: AppColor.kTextColor1,
               ),
             ),
           ],

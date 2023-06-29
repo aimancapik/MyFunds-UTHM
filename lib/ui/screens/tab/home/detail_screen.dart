@@ -22,7 +22,7 @@ class DetailScreen extends StatelessWidget {
                 child: Container(
                   width: 1.sw,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.white70,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(
                         32.r,
@@ -39,20 +39,21 @@ class DetailScreen extends StatelessWidget {
                         child: Container(
                           width: 1.sw,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(
-                                32.r,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(
+                                  32.r,
+                                ),
+                                bottomRight: Radius.circular(
+                                  32.r,
+                                ),
                               ),
-                              bottomRight: Radius.circular(
-                                32.r,
-                              ),
-                            ),
-                            color: AppColor.kPlaceholder1,
-                          ),
+                              color: Colors.white),
                           child: Center(
-                            child: SvgPicture.asset(
-                              urgent.assetName,
-                              width: 100.w,
+                            child: Image.asset(
+                              'assets/images/rumahorangtua.jpg',
+                              width: 500.w,
+                              height: 600.h,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -92,7 +93,7 @@ class DetailScreen extends StatelessWidget {
                                               8.w,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: AppColor.kPlaceholder2,
+                                              color: Colors.grey[200],
                                               borderRadius:
                                                   BorderRadius.circular(
                                                 8.r,
@@ -101,7 +102,7 @@ class DetailScreen extends StatelessWidget {
                                             child: Text(
                                               urgent.categories[index],
                                               style: TextStyle(
-                                                color: AppColor.kTextColor1,
+                                                color: Colors.grey[850],
                                               ),
                                             ),
                                           ),
@@ -138,7 +139,7 @@ class DetailScreen extends StatelessWidget {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
-                                        color: AppColor.kTextColor1,
+                                        color: Colors.grey[900],
                                       ),
                                 ),
                                 Spacer(),
@@ -157,7 +158,8 @@ class DetailScreen extends StatelessWidget {
                                     Spacer(),
                                     Container(
                                       width: (1.sw - 36.w) *
-                                          (100 - double.parse(urgent.percent)) /
+                                          (100 -
+                                              double.parse(urgent.percent)) /
                                           100,
                                       height: 6.h,
                                       decoration: ShapeDecoration(
@@ -180,7 +182,7 @@ class DetailScreen extends StatelessWidget {
                                               .textTheme
                                               .bodyLarge!
                                               .copyWith(
-                                                color: AppColor.kTextColor1,
+                                                color: Colors.grey[700],
                                               ),
                                         ),
                                         Text(
@@ -205,7 +207,7 @@ class DetailScreen extends StatelessWidget {
                                               .textTheme
                                               .bodyLarge!
                                               .copyWith(
-                                                color: AppColor.kTextColor1,
+                                                color: Colors.grey[700],
                                               ),
                                         ),
                                         Text(
@@ -228,7 +230,7 @@ class DetailScreen extends StatelessWidget {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        color: AppColor.kTextColor1,
+                                        color: Colors.grey[700],
                                         height: 2,
                                       ),
                                 ),
@@ -283,9 +285,10 @@ class DetailScreen extends StatelessWidget {
                                       width: 4.sp,
                                     )),
                                 child: Center(
-                                  child: SvgPicture.asset(
-                                    'assets/images/image_placeholder.svg',
+                                  child: Image.asset(
+                                    'assets/images/rumahorangtua.jpg',
                                     width: 16.w,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -319,11 +322,11 @@ class DetailScreen extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Colors.white), // Add this line
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              8.r,
-                            ),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                         ),
                         foregroundColor: MaterialStateProperty.all(
@@ -352,7 +355,7 @@ class DetailScreen extends StatelessWidget {
                         );
                       },
                       child: Text('Donate'),
-                    ),
+                    )
                   ],
                 ),
               )
@@ -447,3 +450,4 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
+

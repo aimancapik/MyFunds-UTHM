@@ -54,9 +54,11 @@ class UrgentCard extends StatelessWidget {
                     color: AppColor.kPlaceholder1,
                   ),
                   child: Center(
-                    child: SvgPicture.asset(
-                      'assets/images/image_placeholder.svg',
-                      width: 80.w,
+                    child: Image.asset(
+                      'assets/images/rumahorangtua.jpg',
+                      width: 450.w,
+                      height: 500.h,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

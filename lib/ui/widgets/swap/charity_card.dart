@@ -1,14 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../theme/app_color.dart';
 
+class CampaignEditDialog extends StatefulWidget {
+  @override
+  _CampaignEditDialogState createState() => _CampaignEditDialogState();
+}
+
+class _CampaignEditDialogState extends State<CampaignEditDialog> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController? _titleController;
+  TextEditingController? _imageController;
+  TextEditingController? _descriptionController;
+  TextEditingController? _durationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+    _imageController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _durationController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _titleController?.dispose();
+    _imageController?.dispose();
+    _descriptionController?.dispose();
+    _durationController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: _titleController,
+                decoration: InputDecoration(labelText: 'Campaign Title'),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _imageController,
+                decoration: InputDecoration(labelText: 'Image URL'),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter an image URL';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _durationController,
+                decoration: InputDecoration(labelText: 'Duration'),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter a duration';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    // Perform update operation with the entered values
+                    String title = _titleController?.text ?? '';
+                    String image = _imageController?.text ?? '';
+                    String description = _descriptionController?.text ?? '';
+                    String duration = _durationController?.text ?? '';
+                    // Perform the update operation here
+                    // ...
+                    // Close the dialog
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text('Save Changes'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class CharityCard extends StatelessWidget {
-  const CharityCard({this.onTap});
+  const CharityCard({this.onTap, this.onEdit});
 
   final void Function()? onTap;
+  final void Function()? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +146,11 @@ class CharityCard extends StatelessWidget {
                         color: AppColor.kPlaceholder1,
                       ),
                       child: Center(
-                        child: SvgPicture.asset(
-                          'assets/images/image_placeholder.svg',
-                          width: 48.w,
+                        child: Image.asset(
+                          'assets/images/dermakilat.png',
+                          width: 500.w,
+                          height: 300.h,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -84,7 +191,7 @@ class CharityCard extends StatelessWidget {
                       horizontal: 8.w,
                     ),
                     child: Text(
-                      'Fundraising to recover Eu La Museum',
+                      'Bantu Derma Kilat Anak Yatim',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             color: AppColor.kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -142,7 +249,16 @@ class CharityCard extends StatelessWidget {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      // Edit Campaign Button
+                      ElevatedButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                          onPressed: onEdit,
+                          icon: Icon(Icons.edit),
+                          label: Text('Edit')),
                     ],
                   )
                 ],
@@ -150,6 +266,42 @@ class CharityCard extends StatelessWidget {
             ))
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CampaignManagementScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Campaign Management'),
+      ),
+      body: Column(
+        children: [
+          CharityCard(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => CampaignEditDialog(),
+              );
+            },
+          ),
+          SizedBox(height: 16.0),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => CampaignEditDialog(),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue, // Set the button background color
+            ),
+            child: Icon(Icons.edit), // Add an icon to the button
+          ),
+        ],
       ),
     );
   }

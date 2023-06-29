@@ -82,10 +82,10 @@ class DonationScreen extends StatelessWidget {
                               color: AppColor.kPlaceholder1,
                             ),
                             child: Center(
-                              child: SvgPicture.asset(
-                                'assets/images/image_placeholder.svg',
-                                width: 48.w,
-                                color: Colors.white,
+                              child: Image.asset(
+                                'assets/images/rumahorangtua.jpg',
+                                width: 100,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -98,13 +98,13 @@ class DonationScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  'Help our buddy get better education',
+                                  'Rumah Kebajikan Orang Tua Parit Raja',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Text(
-                                  'By: White Hat Organization',
+                                  'Kelab Kebajikan & Kebudayaan UTHM',
                                   style: TextStyle(
                                     color: AppColor.kTextColor1,
                                   ),
@@ -201,6 +201,7 @@ class DonationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
                   foregroundColor: MaterialStateProperty.all(
                     AppColor.kPrimaryColor,
                   ),

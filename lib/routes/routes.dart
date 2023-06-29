@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:myfundsuthm/ui/screens/auth/signup_screen.dart';
 import 'package:myfundsuthm/ui/screens/initial/welcome_screen.dart';
+import 'package:myfundsuthm/ui/screens/tab/create_campaign/cuba.dart';
+import 'package:myfundsuthm/ui/screens/tab/create_campaign/start_campaign_screen.dart';
 
 import '../models/result.dart';
 import '../models/urgent.dart';
 import '../ui/screens/auth/forgetpw_screen.dart';
 import '../ui/screens/auth/login_screen.dart';
-import '../ui/screens/auth/signup_screen.dart';
 import '../ui/screens/initial/onboarding_screen.dart';
 import '../ui/screens/initial/spash_screen.dart';
-import '../ui/screens/tab/charity/start_charity_screen.dart';
-import '../ui/screens/tab/charity/step_four_screen.dart';
-import '../ui/screens/tab/charity/step_one_screen.dart';
-import '../ui/screens/tab/charity/step_three_screen.dart';
-import '../ui/screens/tab/charity/step_two_screen.dart';
+import '../ui/screens/tab/create_campaign/step_four_screen.dart';
+import '../ui/screens/tab/create_campaign/step_one_screen.dart';
+import '../ui/screens/tab/create_campaign/step_three_screen.dart';
+import '../ui/screens/tab/create_campaign/step_two_screen.dart';
 import '../ui/screens/tab/home/detail_screen.dart';
 import '../ui/screens/tab/home/donation_screen.dart';
 import '../ui/screens/tab/search/result_screen.dart';
 import '../ui/screens/tab/tab_screen.dart';
 
 class RouteGenerator {
-  static const String mainPage = '/';
+  // static const String mainPage = '/homescreen';
   static const String main = '/tab_screen';
   static const String forgetPw = '/forget_pw_screen';
   static const String login = '/login_screen';
@@ -35,11 +36,17 @@ class RouteGenerator {
   static const String stepThree = '/step_three_screen';
   static const String stepFour = '/step_four_screen';
   static const String welcomeScreen = '/welcome_screen';
+  static const String homepage = '/homepage';
+  static const String cuba = '/cuba';
 
   RouteGenerator._();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case cuba:
+        return MaterialPageRoute(
+          builder: (_) => const FormPage(),
+        );
       case splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
@@ -47,6 +54,10 @@ class RouteGenerator {
       case onboarding:
         return MaterialPageRoute(
           builder: (_) => OnboardingScreen(),
+        );
+      case homepage:
+        return MaterialPageRoute(
+          builder: (_) => TabScreen(),
         );
       case login:
         return MaterialPageRoute(

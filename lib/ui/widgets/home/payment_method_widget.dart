@@ -14,7 +14,7 @@ final List<PaymentMethod> methods = [
   ),
   PaymentMethod(
     name: 'Bank Transfer',
-    assetName: 'assets/images/bca.png',
+    assetName: 'assets/images/fpx-logo.png',
   ),
   PaymentMethod(
     name: 'PayPal',

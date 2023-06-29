@@ -1,13 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:io';
-
-import '../../../theme/app_color.dart';
 
 class EditContent extends StatefulWidget {
   const EditContent();
@@ -22,6 +19,7 @@ class _EditContentState extends State<EditContent> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   File? selectedImage;
+  String? profileImageUrl;
 
   @override
   void initState() {
@@ -31,19 +29,22 @@ class _EditContentState extends State<EditContent> {
 
   void getUserData() async {
     try {
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc('your_user_id')
-          .get();
-
-      if (userDoc.exists) {
-        final userData = userDoc.data() as Map<String, dynamic>;
-        setState(() {
-          firstNameController.text = userData['firstName'];
-          lastNameController.text = userData['lastName'];
-          usernameController.text = userData['username'];
-          phoneNumberController.text = userData['phoneNumber'];
-        });
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final userId = user.uid;
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(userId);
+        final userData = await userDoc.get();
+        if (userData.exists) {
+          final userDataMap = userData.data() as Map<String, dynamic>;
+          setState(() {
+            firstNameController.text = userDataMap['firstName'] ?? '';
+            lastNameController.text = userDataMap['lastName'] ?? '';
+            usernameController.text = userDataMap['username'] ?? '';
+            phoneNumberController.text = userDataMap['phoneNumber'] ?? '';
+            profileImageUrl = userDataMap['profileImage'];
+          });
+        }
       }
     } catch (e) {
       print('Error retrieving user data: $e');
@@ -55,40 +56,47 @@ class _EditContentState extends State<EditContent> {
     return Column(
       children: [
         SizedBox(
-          height: 16.h,
+          height: 16,
         ),
         SizedBox(
-          width: 120.w,
-          height: 120.w,
+          width: 120,
+          height: 120,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                height: 120.w,
-                width: 120.w,
+                height: 120,
+                width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    8.r,
+                    8,
                   ),
-                  color: AppColor.kBlue,
+                  color: Colors.blue,
                 ),
                 child: Center(
                   child: selectedImage != null
                       ? Image.file(
                           selectedImage!,
-                          width: 120.w,
-                          height: 120.w,
+                          width: 120,
+                          height: 120,
                           fit: BoxFit.cover,
                         )
-                      : SvgPicture.asset(
-                          'assets/images/image_placeholder.svg',
-                          width: 32.w,
-                        ),
+                      : (profileImageUrl != null
+                          ? Image.network(
+                              profileImageUrl!,
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            )
+                          : SvgPicture.asset(
+                              'assets/images/image_placeholder.svg',
+                              width: 32,
+                            )),
                 ),
               ),
               Positioned(
-                right: -12.w,
-                bottom: -12.w,
+                right: -12,
+                bottom: -12,
                 child: GestureDetector(
                   onTap: () {
                     // Open image picker
@@ -96,7 +104,7 @@ class _EditContentState extends State<EditContent> {
                   },
                   child: SvgPicture.asset(
                     'assets/images/edit.svg',
-                    width: 32.w,
+                    width: 32,
                   ),
                 ),
               ),
@@ -104,13 +112,13 @@ class _EditContentState extends State<EditContent> {
           ),
         ),
         SizedBox(
-          height: 16.h,
+          height: 16,
         ),
         Spacer(),
         Row(
           children: [
             Expanded(
-              child: CharityInputField(
+              child: ProfileInputField(
                 title: 'First Name',
                 initialValue: firstNameController.text,
                 onChanged: (value) {
@@ -121,10 +129,10 @@ class _EditContentState extends State<EditContent> {
               ),
             ),
             SizedBox(
-              width: 16.w,
+              width: 16,
             ),
             Expanded(
-              child: CharityInputField(
+              child: ProfileInputField(
                 title: 'Last Name',
                 initialValue: lastNameController.text,
                 onChanged: (value) {
@@ -136,9 +144,8 @@ class _EditContentState extends State<EditContent> {
             ),
           ],
         ),
-        
         Spacer(),
-        CharityInputField(
+        ProfileInputField(
           title: 'Username',
           initialValue: usernameController.text,
           onChanged: (value) {
@@ -148,7 +155,7 @@ class _EditContentState extends State<EditContent> {
           },
         ),
         Spacer(),
-        CharityInputField(
+        ProfileInputField(
           title: 'Phone Number',
           initialValue: phoneNumberController.text,
           onChanged: (value) {
@@ -161,19 +168,19 @@ class _EditContentState extends State<EditContent> {
         ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-              AppColor.kPrimaryColor,
+              Colors.blue,
             ),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
-                  8.r,
+                  8,
                 ),
               ),
             ),
             minimumSize: MaterialStateProperty.all(
               Size(
                 double.infinity,
-                56.h,
+                56,
               ),
             ),
           ),
@@ -190,7 +197,7 @@ class _EditContentState extends State<EditContent> {
           ),
         ),
         SizedBox(
-          height: 40.h,
+          height: 40,
         ),
       ],
     );
@@ -206,12 +213,13 @@ class _EditContentState extends State<EditContent> {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final userId = user.uid;
-        final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(userId);
 
         // Create an update data map
         final Map<String, dynamic> updateData = {
           'username': username,
-          'phone': phoneNumber,
+          'phoneNumber': phoneNumber,
         };
 
         // Add first name if not empty
@@ -227,16 +235,22 @@ class _EditContentState extends State<EditContent> {
         // Upload image if selected
         if (selectedImage != null) {
           final imageName = DateTime.now().millisecondsSinceEpoch.toString();
-          final firebase_storage.Reference ref =
-              firebase_storage.FirebaseStorage.instance.ref().child('profile_images/$imageName');
-          final firebase_storage.UploadTask uploadTask = ref.putFile(selectedImage!);
+          final firebase_storage.Reference ref = firebase_storage
+              .FirebaseStorage.instance
+              .ref()
+              .child('profile_images/$imageName');
+          final firebase_storage.UploadTask uploadTask =
+              ref.putFile(selectedImage!);
           final firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
           final imageUrl = await taskSnapshot.ref.getDownloadURL();
           updateData['profileImage'] = imageUrl;
         }
 
-        await userDoc.update(updateData);
+        await userDoc.set(updateData, SetOptions(merge: true));
         print('User information updated successfully.');
+
+        // Navigate back to the profile page
+        Navigator.pop(context);
       }
     } catch (e) {
       print('Error updating user information: $e');
@@ -244,7 +258,8 @@ class _EditContentState extends State<EditContent> {
   }
 
   void openImagePicker() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         selectedImage = File(pickedImage.path);
@@ -253,8 +268,8 @@ class _EditContentState extends State<EditContent> {
   }
 }
 
-class CharityInputField extends StatelessWidget {
-  const CharityInputField({
+class ProfileInputField extends StatelessWidget {
+  const ProfileInputField({
     required this.title,
     required this.initialValue,
     required this.onChanged,
@@ -274,7 +289,7 @@ class CharityInputField extends StatelessWidget {
           style: TextStyle(),
         ),
         SizedBox(
-          height: 2.h,
+          height: 2,
         ),
         Stack(
           children: [
@@ -282,20 +297,20 @@ class CharityInputField extends StatelessWidget {
               onChanged: onChanged,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: AppColor.kPlaceholder2,
+                fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
-                    8.r,
+                    8,
                   ),
                   borderSide: BorderSide.none,
                 ),
                 hintText: 'Enter $title',
-                hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: AppColor.kTextColor1,
+                hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.black,
                     ),
                 contentPadding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 8.h,
+                  horizontal: 12,
+                  vertical: 8,
                 ),
               ),
             ),

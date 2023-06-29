@@ -3,19 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 import '../../../theme/app_color.dart';
 import 'details.dart';
 import 'profile_card.dart';
+import '../../../ui/screens/initial/welcome_screen.dart';
 
 class ProfileContent extends StatelessWidget {
   final FirestoreService firestoreService = FirestoreService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   ProfileContent();
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
+    final User? user = _auth.currentUser;
 
     String email = user?.email ?? '';
     String accountId = user?.uid ?? '';
@@ -23,10 +26,7 @@ class ProfileContent extends StatelessWidget {
     return FutureBuilder<String?>(
       future: firestoreService.getEmail(accountId),
       builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Show a loading indicator while retrieving data from Firestore
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
+        if (snapshot.hasError) {
           // Handle the error case
           return Text('Error: ${snapshot.error}');
         } else {
@@ -75,7 +75,9 @@ class ProfileContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  logout();
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -97,6 +99,16 @@ class ProfileContent extends StatelessWidget {
         }
       },
     );
+  }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      Get.offAll(() => WelcomeScreen());
+    } catch (e) {
+      // Handle any errors that occur during sign out
+      print('Error during logout: $e');
+    }
   }
 }
 

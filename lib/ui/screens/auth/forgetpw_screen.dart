@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../theme/app_color.dart';
-import '../../widgets/authentication/custom_input_field.dart';
 
 class ForgetPwScreen extends StatelessWidget {
   const ForgetPwScreen();
@@ -53,7 +52,7 @@ class ForgetPwScreen extends StatelessWidget {
                               'Forget',
                               style: Theme.of(context)
                                   .textTheme
-                                  .displaySmall!
+                                  .titleLarge!
                                   .copyWith(
                                     color: AppColor.kPrimaryColor,
                                   ),
@@ -62,7 +61,7 @@ class ForgetPwScreen extends StatelessWidget {
                               'Password?',
                               style: Theme.of(context)
                                   .textTheme
-                                  .displaySmall!
+                                  .titleLarge!
                                   .copyWith(
                                     color: AppColor.kPrimaryColor,
                                   ),
@@ -152,8 +151,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomInputField(
-            hintText: 'email address',
+          TextFormField(
             textInputAction: TextInputAction.done,
             controller: _emailController,
             validator: (value) {
@@ -162,6 +160,15 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               }
               return null;
             },
+            decoration: InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(),
+              hintText: 'example@mail.com',
+              prefixIcon: Icon(
+                Icons.email_rounded,
+                color: Colors.black,
+              ),
+            ),
           ),
           SizedBox(
             height: 24.h,
@@ -192,9 +199,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 ? CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   )
-                : Text(
-                    'Submit',
-                  ),
+                : Text('Submit'),
           ),
         ],
       ),

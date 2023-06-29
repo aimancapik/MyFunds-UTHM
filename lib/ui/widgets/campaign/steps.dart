@@ -69,12 +69,11 @@ class StepsContainer extends StatelessWidget {
       duration: AppAnimation.kAnimationDuration,
       curve: AppAnimation.kAnimationCurve,
       alignment: Alignment.center,
-      width: 48.w,
-      height: 48.w,
+      width: 45.w,
+      height: 45.w,
       decoration: BoxDecoration(
-        color:
-            stepIndex > index ? AppColor.kPrimaryColor : AppColor.kPlaceholder2,
-        borderRadius: BorderRadius.circular(8.r),
+        shape: BoxShape.circle,
+        color: stepIndex > index ? AppColor.kPrimaryColor : AppColor.kPlaceholder2,
         border: stepIndex == index
             ? Border.all(
                 color: AppColor.kPrimaryColor,
@@ -88,7 +87,7 @@ class StepsContainer extends StatelessWidget {
         child: stepIndex > index
             ? Icon(
                 Icons.check,
-                size: 24.sp,
+                size: 20.sp,
                 color: Colors.white,
               )
             : AnimatedDefaultTextStyle(
@@ -96,9 +95,7 @@ class StepsContainer extends StatelessWidget {
                   '${index + 1}',
                 ),
                 style: TextStyle(
-                  color: stepIndex == index
-                      ? AppColor.kPrimaryColor
-                      : AppColor.kTextColor1,
+                  color: stepIndex == index ? AppColor.kPrimaryColor : AppColor.kTextColor1,
                   fontWeight: FontWeight.bold,
                 ),
                 duration: AppAnimation.kAnimationDuration,

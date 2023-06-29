@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myfundsuthm/constant/image_strings.dart';
 import 'package:myfundsuthm/ui/screens/auth/login_screen.dart';
-import 'package:myfundsuthm/ui/screens/auth/signup_screen.dart';
+
+import '../auth/signup_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

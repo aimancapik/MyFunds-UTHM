@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../routes/routes.dart';
 import '../../../../theme/app_color.dart';
-import '../../../widgets/charity/charity_scaffold.dart';
-import '../../../widgets/charity/steps.dart';
+import '../../../widgets/campaign/campaign_scaffold.dart';
+import '../../../widgets/campaign/steps.dart';
 
 class StepThreeScreen extends StatelessWidget {
   const StepThreeScreen();
@@ -167,12 +167,8 @@ class StepThreeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  backgroundColor: MaterialStateProperty.all(
-                    AppColor.kAccentColor,
-                  ),
-                  foregroundColor: MaterialStateProperty.all(
-                    AppColor.kPrimaryColor,
-                  ),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 onPressed: () =>
                     Navigator.of(context).pushNamed(RouteGenerator.stepFour),

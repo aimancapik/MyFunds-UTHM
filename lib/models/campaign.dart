@@ -1,28 +1,29 @@
-class Charity {
+class Campaign {
   final String name;
   final String assetName;
 
-  Charity({required this.name, required this.assetName});
+  Campaign({required this.name, required this.assetName});
 }
+//jenis campaign
 
-List<Charity> charities = [
-  Charity(
+List<Campaign> campaign= [
+  Campaign(
     name: 'Education',
     assetName: 'assets/images/grad.png',
   ),
-  Charity(
+  Campaign(
     name: 'Health',
     assetName: 'assets/images/medic.png',
   ),
-  Charity(
+  Campaign(
     name: 'Environment',
     assetName: 'assets/images/env.png',
   ),
-  Charity(
-    name: 'Animal',
-    assetName: 'assets/images/animal.png',
+  Campaign(
+    name: 'Emergency Relief',
+    assetName: 'assets/images/kecemasan.png',
   ),
-  Charity(
+  Campaign(
     name: 'Culture & Arts',
     assetName: 'assets/images/event.png',
   ),

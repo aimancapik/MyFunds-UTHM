@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../routes/routes.dart';
 import '../../../theme/app_color.dart';
-import 'custom_input_field.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm();
@@ -20,6 +19,7 @@ class _SignupFormState extends State<SignupForm> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
+  bool _passwordVisible = false;
 
   bool _isLoading = false;
   String _errorText = '';
@@ -115,6 +115,12 @@ class _SignupFormState extends State<SignupForm> {
     super.dispose();
   }
 
+  void _togglePasswordVisibility() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -123,22 +129,49 @@ class _SignupFormState extends State<SignupForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Create New',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            'Create new',
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   color: AppColor.kPrimaryColor,
                 ),
           ),
           Text(
             'Account',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   color: AppColor.kPrimaryColor,
                 ),
           ),
           SizedBox(
             height: 40.h,
           ),
-          CustomInputField(
-            hintText: 'Email',
+          TextFormField(
+            decoration: InputDecoration(
+              label: Text("Email"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.email_rounded,
+                color: Colors.blue[100],
+              ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              hintText: 'Email',
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+            ),
             textInputAction: TextInputAction.next,
             controller: _emailController,
             validator: _validateEmail,
@@ -146,8 +179,35 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(
             height: 8.h,
           ),
-          CustomInputField(
-            hintText: 'Username',
+          TextFormField(
+            decoration: InputDecoration(
+              label: Text("Username"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.person_2_rounded,
+                color: Colors.blue[100],
+              ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              hintText: 'Username',
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+            ),
             textInputAction: TextInputAction.next,
             controller: _usernameController,
             validator: _validateUsername,
@@ -155,8 +215,35 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(
             height: 8.h,
           ),
-          CustomInputField(
-            hintText: 'Phone Number',
+          TextFormField(
+            decoration: InputDecoration(
+              label: Text("Phone No"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.phone_android_rounded,
+                color: Colors.blue[100],
+              ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              hintText: 'Phone No',
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+            ),
             textInputAction: TextInputAction.next,
             controller: _phoneController,
             validator: _validatePhoneNumber,
@@ -164,12 +251,46 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(
             height: 8.h,
           ),
-          CustomInputField(
-            hintText: 'Password',
-            isPassword: true,
+          TextFormField(
+            decoration: InputDecoration(
+              label: Text("Password"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.fingerprint_rounded,
+                color: Colors.blue[100],
+              ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              hintText: 'Password',
+              focusedErrorBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.blue[100], // Set color for the suffix icon
+                ),
+                onPressed: _togglePasswordVisibility,
+              ),
+            ),
             textInputAction: TextInputAction.done,
             controller: _passwordController,
             validator: _validatePassword,
+            obscureText: !_passwordVisible, // Hide or show password
           ),
           SizedBox(
             height: 16.h,
@@ -182,7 +303,7 @@ class _SignupFormState extends State<SignupForm> {
               ),
             ),
           SizedBox(
-            height: 50.h,
+            height: 30.h,
           ),
           ElevatedButton(
             style: ButtonStyle(

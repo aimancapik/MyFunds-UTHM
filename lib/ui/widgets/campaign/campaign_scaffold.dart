@@ -25,26 +25,18 @@ class CharityScaffold extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
-                    32.r,
-                  ),
-                  bottomRight: Radius.circular(
-                    32.r,
-                  ),
+                  bottomLeft: Radius.circular(32.r),
+                  bottomRight: Radius.circular(32.r),
                 ),
               ),
-              child: SafeArea(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: children),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...children,
+                  Spacer(),
+                  button,
+                ],
               ),
-            ),
-          ),
-          Container(
-            height: 120.h,
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-            child: Center(
-              child: button,
             ),
           ),
         ],

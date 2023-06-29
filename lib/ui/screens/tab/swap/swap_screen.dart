@@ -79,7 +79,7 @@ class _SwapScreenState extends State<SwapScreen> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'My Charity',
+                                    'My Campaign',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall!

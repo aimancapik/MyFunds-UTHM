@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../theme/app_color.dart';
 
-class CharityInputField extends StatelessWidget {
-  const CharityInputField(
+class CampignInputField extends StatelessWidget {
+  const CampignInputField(
     this.title, {
     this.assetName,
     this.onTap,

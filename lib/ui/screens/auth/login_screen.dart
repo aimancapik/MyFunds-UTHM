@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myfundsuthm/ui/screens/auth/forgot_password/forgot_btn_widget.dart';
+import 'package:myfundsuthm/ui/screens/auth/signup_screen.dart';
 
 import '../../../routes/routes.dart';
 import '../../../theme/app_color.dart';
@@ -13,7 +15,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor:Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -53,8 +55,12 @@ class LoginScreen extends StatelessWidget {
                             height: 32.h,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(RouteGenerator.signup),
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return SignupScreen();
+                              }));
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -218,21 +224,22 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             // controller: emailController
             decoration: InputDecoration(
-              hintText: 'Email',
-              hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColor.kTextColor1.withOpacity(0.6),
-                  ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColor.kTextColor1.withOpacity(0.6),
-                ),
+              label: Text("Email"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.email_rounded,
+                color: Colors.blue[100],
               ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColor.kTextColor1.withOpacity(0.6),
-                ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
               ),
-              errorBorder: UnderlineInputBorder(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.red,
                 ),
@@ -259,23 +266,27 @@ class _LoginFormState extends State<LoginForm> {
               });
             },
           ),
+          SizedBox(
+            height: 15,
+          ),
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'Password',
-              hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColor.kTextColor1.withOpacity(0.6),
-                  ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColor.kTextColor1.withOpacity(0.6),
-                ),
+              label: Text("Password"),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue)),
+              prefixIcon: Icon(
+                Icons.fingerprint_rounded,
+                color: Colors.blue[100],
               ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColor.kTextColor1.withOpacity(0.6),
-                ),
+              labelStyle: TextStyle(
+                color: Colors.blue[100],
               ),
-              errorBorder: UnderlineInputBorder(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blueAccent,
+              )),
+              errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.red,
                 ),
@@ -312,9 +323,9 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: () => Navigator.of(context).pushReplacementNamed(
-                  RouteGenerator.signup,
-                ),
+                onPressed: () {
+                  modalBottomSheet(context);
+                },
                 child: Text(
                   'Forgot password?',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -326,7 +337,7 @@ class _LoginFormState extends State<LoginForm> {
             ],
           ),
           SizedBox(
-            height: 50.h,
+            height: 40.h,
           ),
           Center(
             child: ElevatedButton(

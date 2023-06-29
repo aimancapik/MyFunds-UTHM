@@ -11,7 +11,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
