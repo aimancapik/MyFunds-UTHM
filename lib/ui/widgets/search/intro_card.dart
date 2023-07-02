@@ -110,7 +110,7 @@ class IntroCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Nov 27, 2019',
+                            'Nov 27, 2023',
                             style: TextStyle(
                               color: AppColor.kTextColor1,
                             ),

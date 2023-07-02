@@ -53,14 +53,14 @@ class UrgentCard extends StatelessWidget {
                     ),
                     color: AppColor.kPlaceholder1,
                   ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/rumahorangtua.jpg',
-                      width: 450.w,
-                      height: 500.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  // child: Center(
+                  //   child: Image.asset(
+                  //     // 'assets/images/rumahorangtua.jpg',
+                  //     width: 450.w,
+                  //     height: 500.h,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
                 ),
                 Positioned(
                   bottom: 8.h,
@@ -75,35 +75,35 @@ class UrgentCard extends StatelessWidget {
               height: 8.h,
             ),
             Text(
-              urgent.title,
+              'Title: ${campaign[index].campaignTitle}',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
             Spacer(),
-            Row(
-              children: [
-                Container(
-                  width: (240.w - 20.w) * double.parse(urgent.percent) / 100,
-                  height: 4.h,
-                  decoration: ShapeDecoration(
-                    shape: const StadiumBorder(),
-                    color: AppColor.kPrimaryColor,
-                  ),
-                ),
-                Spacer(),
-                Container(
-                  width: (240.w - 20.w) *
-                      (100 - double.parse(urgent.percent)) /
-                      100,
-                  height: 4.h,
-                  decoration: ShapeDecoration(
-                    shape: const StadiumBorder(),
-                    color: AppColor.kPlaceholder1,
-                  ),
-                )
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     // Container(
+            //     //   width: (240.w - 20.w) * double.parse(urgent.percent) / 100,
+            //     //   height: 4.h,
+            //     //   decoration: ShapeDecoration(
+            //     //     shape: const StadiumBorder(),
+            //     //     color: AppColor.kPrimaryColor,
+            //     //   ),
+            //     // ),
+            //     // Spacer(),
+            //     // Container(
+            //     //   width: (240.w - 20.w) *
+            //     //       (100 - double.parse(urgent.percent)) /
+            //     //       100,
+            //     //   height: 4.h,
+            //     //   decoration: ShapeDecoration(
+            //     //     shape: const StadiumBorder(),
+            //     //     color: AppColor.kPlaceholder1,
+            //     //   ),
+            //     // )
+            //   ],
+            // ),
             SizedBox(
               height: 8.h,
             ),
@@ -119,18 +119,18 @@ class UrgentCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '\RM${urgent.target} ',
+                      '\RM${campaign[index].fundsTarget}',
                       style: TextStyle(
                         color: AppColor.kTitle,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text(
-                      '(${urgent.percent}%)',
-                      style: TextStyle(
-                        color: AppColor.kTextColor1,
-                      ),
-                    )
+                    // Text(
+                    //   '(${urgent.percent}%)',
+                    //   style: TextStyle(
+                    //     color: AppColor.kTextColor1,
+                    //   ),
+                    // )
                   ],
                 )
               ],

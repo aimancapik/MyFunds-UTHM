@@ -1,11 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../routes/routes.dart';
-import '../../../../theme/app_color.dart';
-import '../../../widgets/campaign/campaign_input_field.dart';
-import '../../../widgets/campaign/campaign_scaffold.dart';
 import '../../../widgets/campaign/steps.dart';
 
 class StepFourScreen extends StatefulWidget {
@@ -16,255 +15,350 @@ class StepFourScreen extends StatefulWidget {
 }
 
 class _StepFourScreenState extends State<StepFourScreen> {
-  bool _isChecked = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _phoneNoController = TextEditingController();
+  var _isChecked = true;
+
+  void _navigateToNextScreen() {
+  if (_formKey.currentState!.validate()) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('requests')
+          .doc(user.uid)
+          .update({
+            'phoneNo': _phoneNoController.text,
+            'agreement': 'false',
+          })
+          .then((value) {
+            if (_isChecked) {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.r),
+                ),
+                builder: (_) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewPadding.bottom,
+                    top: 32.h,
+                    left: 16.w,
+                    right: 16.w,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 64.h),
+                      SvgPicture.asset(
+                        'assets/images/check.svg',
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        'Successful',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        'Your campaign registration is sent to our admin to review. '
+                        '\nNotification will be given to you in dashboard once your campaign is approved or not',
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 80.h),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                            ),
+                          ),
+                          minimumSize: MaterialStateProperty.all(
+                            Size(
+                              double.infinity,
+                              56.h,
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            RouteGenerator.main,
+                            (route) => false,
+                          );
+                        },
+                        child: Text('Home'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Please agree to the terms and conditions.'),
+                ),
+              );
+            }
+          })
+          .catchError((error) {
+            // Error handling
+            print('Error updating document: $error');
+          });
+    }
+  } else {
+    // Field validation failed, show error messages or prompt user to fill in required fields.
+    setState(() {
+      // Set error flags or show error messages.
+    });
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
-    return CharityScaffold(
-      children: [
-        Text(
-          'Start a Campaign',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        SizedBox(
-          height: 8.h,
-        ),
-        Text(
-          'Complete your personal information to proceed to this charity program',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        SizedBox(
-          height: 24.h,
-        ),
-        Steps(3, 4),
-        SizedBox(
-          height: 24.h,
-        ),
-        CampignInputField('Your Phone Number'),
-        SizedBox(
-          height: 24.h,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
           child: Column(
             children: [
-              Row(
-                children: [
-                  Checkbox(
-                    value: _isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        _isChecked = value!;
-                      });
-                    },
-                    fillColor: MaterialStateProperty.resolveWith(
-                        (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return Colors
-                            .blue; // Color when the checkbox is selected
-                      }
-                      return Colors.blue; // Default color
-                    }),
-                    checkColor: Colors.white, // Color of the tick symbol
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      side: BorderSide(
-                          color: _isChecked
-                              ? Colors.white
-                              : Colors.blue), // Border color of the checkbox
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(32.r),
+                    bottomRight: Radius.circular(32.r),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Start a Campaign',
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  ),
-                  Text(
-                    'I agree to the terms and conditions',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text(
-                        'Terms and Conditions',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(fontWeight: FontWeight.bold),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Complete your personal information to proceed to this charity program',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    SizedBox(height: 24.h),
+                    Steps(3, 4),
+                    SizedBox(height: 38.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: TextFormField(
+                        controller: _phoneNoController,
+                        decoration: InputDecoration(
+                          labelText: 'Your Phone Number',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Phone number is required';
+                          }
+
+                          // Remove any non-digit characters from the input value
+                          final cleanedValue =
+                              value.replaceAll(RegExp(r'\D'), '');
+
+                          if (cleanedValue.length < 10 ||
+                              cleanedValue.length > 11) {
+                            return 'Phone number must be 10 or 11 digits';
+                          }
+
+                          // Add any additional phone number validation logic here
+
+                          return null;
+                        },
                       ),
-                      content: Text(
-                        _termsAndConditionsText,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    SizedBox(height: 24.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _isChecked,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isChecked = value!;
+                                  });
+                                },
+                              ),
+                              Text(
+                                'I agree to the terms and conditions',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8.h),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => SingleChildScrollView(
+                                  child: AlertDialog(
+                                    title: Text(
+                                      'Terms and Conditions',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(fontWeight: FontWeight.bold),
+                                    ),
+                                    content: Text(
+                                      _termsAndConditionsText,
+                                      style:
+                                          Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.blue),
+                                          foregroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Close'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'View Terms and Conditions',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
-                      actions: [
+                    ),
+                    SizedBox(height: 24.h),
+                    Row(
+                      children: [
                         ElevatedButton(
                           style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.grey),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            minimumSize: MaterialStateProperty.all(
+                              Size(
+                                160.w,
+                                48.h,
+                              ),
+                            ),
+                            padding: MaterialStateProperty.all(
+                              EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Previous button functionality
+                          },
+                          child: Text('Previous'),
+                        ),
+                        SizedBox(width: 16.w), // Added spacing between buttons
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                              ),
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.blue),
                               foregroundColor:
-                                  MaterialStateProperty.all(Colors.white)),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Close'),
+                                  MaterialStateProperty.all(Colors.white),
+                              minimumSize: MaterialStateProperty.all(
+                                Size(
+                                  double.infinity,
+                                  48.h,
+                                ),
+                              ),
+                              padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                  horizontal: 24.w,
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              _navigateToNextScreen();
+                            },
+                            child: Text('Publish Now'),
+                          ),
                         ),
                       ],
                     ),
-                  );
-                },
-                child: Text(
-                  'View Terms and Conditions',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColor.kPrimaryColor,
-                        decoration: TextDecoration.underline,
-                      ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-      ],
-      button: ElevatedButton(
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                8.r,
-              ),
-            ),
-          ),
-          backgroundColor: MaterialStateProperty.all(Colors.blue),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          minimumSize: MaterialStateProperty.all(
-            Size(
-              double.infinity,
-              48.h,
-            ),
-          ),
-          padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(
-              horizontal: 24.w,
-            ),
-          ),
-        ),
-        onPressed: () {
-          if (_isChecked) {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.r),
-              ),
-              builder: (_) => Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewPadding.bottom,
-                  top: 32.h,
-                  left: 16.w,
-                  right: 16.w,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 64.h,
-                    ),
-                    SvgPicture.asset(
-                      'assets/images/check.svg',
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Text(
-                      'Successful',
-                      style:
-                          Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.kPrimaryColor,
-                              ),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Text(
-                      'Your charity program has been successfully created. '
-                      'Now you can check and maintain it in your \'activity\' menu.',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 80.h,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.blue),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                          ),
-                        ),
-                        minimumSize: MaterialStateProperty.all(
-                          Size(
-                            double.infinity,
-                            56.h,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          RouteGenerator.main,
-                          (route) => false,
-                        );
-                      },
-                      child: Text('Home'),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            // Show a snackbar or toast message indicating that the terms and conditions must be agreed to proceed.
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Please agree to the terms and conditions.'),
-              ),
-            );
-          }
-        },
-        child: Text('Publish Now'),
       ),
     );
   }
-}
 
-const String _termsAndConditionsText = '''
+  String _termsAndConditionsText = '''
 Terms and Conditions:
 
 1. By participating in this fundraising campaign, you acknowledge and agree to comply with all applicable laws and regulations.
 
-2. The funds raised through this campaign will be used solely for the stated purpose outlined in the campaign description.
+2. The funds raised through this campaign will be used solely for charitable purposes as specified by the campaign organizer.
 
-3. The campaign organizers reserve the right to allocate the funds as needed to fulfill the campaign's objectives.
+3. The campaign organizer reserves the right to use the funds raised for any lawful purpose that supports the stated charitable cause.
 
-4. Any personal information provided during the donation process will be handled in accordance with our privacy policy.
+4. All donations made to this campaign are final and non-refundable.
 
-5. Donations made to this campaign are non-refundable.
+5. The campaign organizer will provide periodic updates on the progress and impact of the campaign to the donors.
 
-6. The campaign organizers are not responsible for any errors or omissions in the campaign description or any other materials associated with the campaign.
+6. The campaign organizer will handle all personal information provided by donors in accordance with applicable privacy laws and regulations.
 
-7. The campaign organizers may make changes to the campaign's goals, timeline, or other aspects as necessary.
+7. The campaign organizer is not responsible for any loss or damage incurred as a result of participating in this campaign.
 
-8. By making a donation to this campaign, you agree to receive occasional updates and communications regarding the campaign's progress.
+8. By making a donation, you consent to the use of your name and likeness for promotional purposes related to this campaign.
 
-9. The campaign organizers reserve the right to cancel or terminate the campaign at any time.
+9. The campaign organizer reserves the right to modify or cancel the campaign at any time.
 
-10. The success of the campaign and the achievement of its goals are not guaranteed.
+10. If you have any questions or concerns regarding this campaign, please contact the campaign organizer directly.
 
-Please read these terms and conditions carefully before proceeding with your donation. If you do not agree with any of the terms stated above, please do not continue with the donation process.
+By clicking "I agree," you indicate that you have read, understood, and agree to be bound by these terms and conditions.
 ''';
+}

@@ -55,7 +55,7 @@ final List<Result> results = [
 ];
 
 class ResultCard extends StatelessWidget {
-  const ResultCard(this.result);
+  const ResultCard(this.result, String campaignDescription, String fundsTarget, String faculty, String startDate, String campaignType, String organization, String phoneNo, String endDate, String personInCharge, String recipients);
 
   final Result result;
 

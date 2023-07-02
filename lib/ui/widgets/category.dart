@@ -6,8 +6,9 @@ import '../../theme/app_color.dart';
 final List<String> categories = [
   'Education',
   'Health',
-  'Animal',
+  'Culture & Arts',
   'Environment',
+  'Emergency'
 ];
 
 class Category extends StatefulWidget {

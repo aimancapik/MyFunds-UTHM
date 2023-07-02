@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../bloc/swap/swap_bloc.dart';
 import '../../../../theme/app_color.dart';
-import '../../../widgets/swap/empty_content.dart';
-import '../../../widgets/swap/page_content.dart';
-import '../../../widgets/swap/selection.dart';
+import '../../../widgets/history_and_mycampaign/empty_content.dart';
+import '../../../widgets/history_and_mycampaign/page_content.dart';
+import '../../../widgets/history_and_mycampaign/selection.dart';
 
 class SwapScreen extends StatefulWidget {
   const SwapScreen({Key? key}) : super(key: key);

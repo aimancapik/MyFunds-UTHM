@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../models/campaign.dart';
 import '../../../theme/app_color.dart';
 
+
+
+
 class CategoryCard extends StatelessWidget {
   final Campaign campaign;
   final bool isSelected; // New isSelected parameter
@@ -13,6 +16,8 @@ class CategoryCard extends StatelessWidget {
     required this.isSelected, // Initialize isSelected parameter
     required this.onTap,
   });
+
+  
 
   @override
   Widget build(BuildContext context) {

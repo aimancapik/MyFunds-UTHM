@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myfundsuthm/ui/screens/auth/signup_screen.dart';
 import 'package:myfundsuthm/ui/screens/initial/welcome_screen.dart';
-import 'package:myfundsuthm/ui/screens/tab/create_campaign/cuba.dart';
+
 import 'package:myfundsuthm/ui/screens/tab/create_campaign/start_campaign_screen.dart';
 
 import '../models/result.dart';
 import '../models/urgent.dart';
 import '../ui/screens/auth/forgetpw_screen.dart';
 import '../ui/screens/auth/login_screen.dart';
-import '../ui/screens/initial/onboarding_screen.dart';
+
 import '../ui/screens/initial/spash_screen.dart';
 import '../ui/screens/tab/create_campaign/step_four_screen.dart';
 import '../ui/screens/tab/create_campaign/step_one_screen.dart';
 import '../ui/screens/tab/create_campaign/step_three_screen.dart';
 import '../ui/screens/tab/create_campaign/step_two_screen.dart';
-import '../ui/screens/tab/home/detail_screen.dart';
 import '../ui/screens/tab/home/donation_screen.dart';
 import '../ui/screens/tab/search/result_screen.dart';
 import '../ui/screens/tab/tab_screen.dart';
@@ -43,18 +42,11 @@ class RouteGenerator {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case cuba:
-        return MaterialPageRoute(
-          builder: (_) => const FormPage(),
-        );
       case splash:
         return MaterialPageRoute(
           builder: (_) => const SplashScreen(),
         );
-      case onboarding:
-        return MaterialPageRoute(
-          builder: (_) => OnboardingScreen(),
-        );
+
       case homepage:
         return MaterialPageRoute(
           builder: (_) => TabScreen(),
@@ -75,10 +67,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const TabScreen(),
         );
-      case details:
-        return MaterialPageRoute(
-          builder: (_) => DetailScreen(settings.arguments as Urgent),
-        );
+      // case details:
+      //   return MaterialPageRoute(
+      //     builder: (_) => DetailScreen(settings.arguments as Urgent),
+      //   );
       case donation:
         return MaterialPageRoute(
           builder: (_) => DonationScreen(settings.arguments as String),

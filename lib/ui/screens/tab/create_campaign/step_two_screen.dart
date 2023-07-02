@@ -129,7 +129,7 @@ class _StepTwoScreenState extends State<StepTwoScreen> {
                   }).then((value) {
                     // Navigation to the StartCampaignScreen
                     Navigator.of(context)
-                        .pushNamed(RouteGenerator.stepTwo);
+                        .pushNamed(RouteGenerator.stepOne);
                   }).catchError((error) {
                     // Error handling
                     print('Error updating document: $error');

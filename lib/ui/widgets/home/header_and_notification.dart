@@ -61,12 +61,10 @@ class Header extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0.w),
       child: FutureBuilder<DocumentSnapshot>(
-        future:
-            FirebaseFirestore.instance.collection('users').doc(user!.uid).get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        future: FirebaseFirestore.instance.collection('users').doc(user!.uid).get(),
+        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return LinearProgressIndicator(); // Replace CircularProgressIndicator with LinearProgressIndicator
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -83,9 +81,9 @@ class Header extends StatelessWidget {
                       Text(
                         username,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              color: AppColor.kTitle,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          color: AppColor.kTitle,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),

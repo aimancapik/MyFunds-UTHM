@@ -24,19 +24,6 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(tlogoapp, height: height * 0.6),
-            // Text(
-            //   "MyFunds UTHM",
-            //   style: TextStyle(
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 30,
-            //   ),
-            // ),
-            // Text(
-            //   "Your home for help",
-            //   style: TextStyle(
-            //     fontSize: 17,
-            //   ),
-            // ),
             Row(
               children: [
                 Expanded(
