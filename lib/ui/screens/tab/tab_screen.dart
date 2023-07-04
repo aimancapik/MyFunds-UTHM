@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myfundsuthm/ui/widgets/history_and_mycampaign/myDonation.dart';
 
 import '../../../routes/routes.dart';
-import '../../../theme/app_color.dart';
-import 'home/home_screen.dart';
+import 'home/MyHomeScreen.dart';
 import 'profile/proflle_screen.dart';
 import 'search/search_screen.dart';
-import 'swap/swap_screen.dart';
 
 final List<Widget> pages = [
   HomeScreen(),
   SearchScreen(),
   Scaffold(
-    backgroundColor: AppColor.kPrimaryColor,
+    backgroundColor: Colors.blue,
   ),
-  SwapScreen(),
+  MyDonationPage(),
   ProfileScreen(),
 ];
 
@@ -43,12 +42,12 @@ class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor: Colors.blue,
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: SizedBox(
         child: BottomNavigationBar(
           iconSize: 24.w,
-          backgroundColor: AppColor.kPrimaryColor,
+          backgroundColor: Colors.blue,
           currentIndex: tabIndex,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
@@ -75,7 +74,7 @@ class _TabScreenState extends State<TabScreen> {
                 height: 48.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.kTitle.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.5),
                 ),
                 child: Center(
                   child: SvgPicture.asset(
@@ -98,7 +97,7 @@ class _TabScreenState extends State<TabScreen> {
                 height: 48.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.kTitle.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.5),
                 ),
                 child: Center(
                   child: SvgPicture.asset(
@@ -121,7 +120,7 @@ class _TabScreenState extends State<TabScreen> {
                 height: 40.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.kAccentColor,
+                  color: Colors.blueAccent,
                 ),
                 child: Center(
                   child: SvgPicture.asset(
@@ -139,7 +138,7 @@ class _TabScreenState extends State<TabScreen> {
                     color: const Color.fromARGB(255, 255, 255, 255),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColor.kForthColor,
+                        color: Colors.lightBlueAccent,
                         offset: Offset(
                           0,
                           2.h,
@@ -161,7 +160,7 @@ class _TabScreenState extends State<TabScreen> {
                 height: 48.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.kTitle.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.5),
                 ),
                 child: Center(
                   child: SvgPicture.asset(
@@ -184,7 +183,7 @@ class _TabScreenState extends State<TabScreen> {
                 height: 48.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColor.kTitle.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.5),
                 ),
                 child: Center(
                   child: SvgPicture.asset(

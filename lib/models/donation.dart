@@ -5,7 +5,7 @@ class Donation {
   final DateTime date;
 
   Donation({
-    required this.organizer,
+    required this.organizer, 
     required this.desc,
     required this.total,
     required this.date,

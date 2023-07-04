@@ -4,8 +4,6 @@ import 'package:myfundsuthm/ui/screens/initial/welcome_screen.dart';
 
 import 'package:myfundsuthm/ui/screens/tab/create_campaign/start_campaign_screen.dart';
 
-import '../models/result.dart';
-import '../models/urgent.dart';
 import '../ui/screens/auth/forgetpw_screen.dart';
 import '../ui/screens/auth/login_screen.dart';
 
@@ -14,8 +12,7 @@ import '../ui/screens/tab/create_campaign/step_four_screen.dart';
 import '../ui/screens/tab/create_campaign/step_one_screen.dart';
 import '../ui/screens/tab/create_campaign/step_three_screen.dart';
 import '../ui/screens/tab/create_campaign/step_two_screen.dart';
-import '../ui/screens/tab/home/donation_screen.dart';
-import '../ui/screens/tab/search/result_screen.dart';
+
 import '../ui/screens/tab/tab_screen.dart';
 
 class RouteGenerator {
@@ -71,14 +68,7 @@ class RouteGenerator {
       //   return MaterialPageRoute(
       //     builder: (_) => DetailScreen(settings.arguments as Urgent),
       //   );
-      case donation:
-        return MaterialPageRoute(
-          builder: (_) => DonationScreen(settings.arguments as String),
-        );
-      case result:
-        return MaterialPageRoute(
-          builder: (_) => ResultScreen(settings.arguments as Result),
-        );
+
       case startCharity:
         return MaterialPageRoute(
           builder: (_) => StartCampaign(),

@@ -14,55 +14,108 @@ class Header extends StatelessWidget {
     final User? user = FirebaseAuth.instance.currentUser;
 
     void showNotificationPopup(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Align(
-            alignment: Alignment.topRight,
-            child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Notification Popup',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-                    Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit sem sit amet turpis lobortis ullamcorper. Proin pulvinar odio quis tincidunt facilisis. Vestibulum posuere nisi eget dui porttitor, ut commodo lectus convallis.',
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                    SizedBox(height: 12.h),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Close'),
-                    ),
-                  ],
-                ),
-              ),
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Align(
+        alignment: Alignment.topRight,
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width, // Set the width to match the screen width
+            padding: EdgeInsets.all(16.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.r),
             ),
-          );
-        },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Notification Popup',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 12.h),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('notification').where('userId', isEqualTo: user!.uid).snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      final notifications = snapshot.data!.docs;
+                      if (notifications.isNotEmpty) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: notifications.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final notification = notifications[index];
+                            final data = notification.data() as Map<String, dynamic>;
+                            final message = data['message'] ?? '';
+                            final timestamp = data['timestamp'] as Timestamp?;
+                            final dateTime = timestamp != null ? timestamp.toDate() : null;
+
+                            return Dismissible(
+                              key: Key(notification.id),
+                              direction: DismissDirection.startToEnd,
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 16.w),
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onDismissed: (direction) {
+                                // Delete the notification from Firestore
+                                FirebaseFirestore.instance.collection('notification').doc(notification.id).delete();
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    message,
+                                    style: TextStyle(fontSize: 14.sp),
+                                  ),
+                                  if (dateTime != null)
+                                    Text(
+                                      'Timestamp: $dateTime', // Customize the formatting as per your requirement
+                                      style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                                    ),
+                                  SizedBox(height: 12.h),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Text('No notifications found.');
+                      }
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       );
-    }
+    },
+  );
+}
+
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0.w),
       child: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection('users').doc(user!.uid).get(),
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        future:
+            FirebaseFirestore.instance.collection('users').doc(user!.uid).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return LinearProgressIndicator(); // Replace CircularProgressIndicator with LinearProgressIndicator
           } else if (snapshot.hasError) {
@@ -81,9 +134,9 @@ class Header extends StatelessWidget {
                       Text(
                         username,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: AppColor.kTitle,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: AppColor.kTitle,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../theme/app_color.dart';
 
 final List<String> categories = [
+  'All',
   'Education',
   'Health',
   'Culture & Arts',
@@ -12,8 +13,11 @@ final List<String> categories = [
 ];
 
 class Category extends StatefulWidget {
+  final Function(String) updateCategory;
+
   const Category({
     Key? key,
+    required this.updateCategory,
   }) : super(key: key);
 
   @override
@@ -26,53 +30,45 @@ class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: 16.0.w,
-      ),
+      padding: EdgeInsets.only(left: 16.0.w),
       child: SizedBox(
         height: 56.h,
-        child: SingleChildScrollView(
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(
-                categories.length,
-                (index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCat = index;
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8.h,
-                              horizontal: 8.w,
-                            ),
-                            decoration: BoxDecoration(
-                              color: selectedCat == index
-                                  ? AppColor.kPrimaryColor
-                                  : AppColor.kPlaceholder2,
-                              borderRadius: BorderRadius.circular(
-                                8.r,
-                              ),
-                            ),
-                            child: Text(
-                              categories[index],
-                              style: TextStyle(
-                                color: selectedCat == index
-                                    ? Colors.white
-                                    : AppColor.kTextColor1,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 16.w,
-                          ),
-                        ],
-                      ),
-                    )),
-          ),
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedCat = index;
+                });
+                widget.updateCategory(categories[index]);
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: 16.w),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8.h,
+                    horizontal: 8.w,
+                  ),
+                  decoration: BoxDecoration(
+                    color: selectedCat == index
+                        ? Colors.blue
+                        : AppColor.kPlaceholder2,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Text(
+                    categories[index],
+                    style: TextStyle(
+                      color: selectedCat == index
+                          ? Colors.white
+                          : AppColor.kTextColor1,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

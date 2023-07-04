@@ -38,8 +38,9 @@ class WelcomeScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      foregroundColor: Colors.white,
-                      side: BorderSide(color: Colors.white),
+                      foregroundColor: Colors.blue,
+                      backgroundColor: Colors.white,
+                      side: BorderSide(color: Colors.blue),
                       padding: EdgeInsets.symmetric(vertical: 15),
                     ),
                     child: Text(
@@ -68,7 +69,7 @@ class WelcomeScreen extends StatelessWidget {
                       side: BorderSide(color: Colors.blue.shade900),
                       padding: EdgeInsets.symmetric(vertical: 15),
                     ),
-                    child: Text("Sign Up"),
+                    child: Text("SIGNUP",style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 )
               ],

@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.blue,
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                                       .textTheme
                                       .bodyLarge!
                                       .copyWith(
-                                        color: AppColor.kPrimaryColor,
+                                        color: Colors.blue,
                                       ),
                                 ),
                                 Text(
@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColor.kPrimaryColor.withOpacity(
+                            color: Colors.blue.withOpacity(
                               0.5,
                             ),
                             offset: Offset(
@@ -209,13 +209,13 @@ class _LoginFormState extends State<LoginForm> {
           Text(
             'Sign in',
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           Text(
             'to continue',
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           SizedBox(
@@ -343,7 +343,7 @@ class _LoginFormState extends State<LoginForm> {
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  AppColor.kPrimaryColor,
+                  Colors.blue,
                 ),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(

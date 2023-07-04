@@ -76,13 +76,13 @@ class _SignupFormState extends State<SignupForm> {
           Text(
             'Create New',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           Text(
             'Account',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           SizedBox(
@@ -147,7 +147,7 @@ class _SignupFormState extends State<SignupForm> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                AppColor.kPrimaryColor,
+                Colors.blue,
               ),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(

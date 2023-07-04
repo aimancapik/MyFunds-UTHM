@@ -96,7 +96,7 @@ class SignupScreen extends StatelessWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColor.kPrimaryColor.withOpacity(
+                            color: Colors.blue.withOpacity(
                               0.5,
                             ),
                             offset: Offset(

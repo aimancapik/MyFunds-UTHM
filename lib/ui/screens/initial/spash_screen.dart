@@ -26,7 +26,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//         backgroundColor: AppColor.kPrimaryColor,
+//         backgroundColor: Colors.blue,
 //         body: SafeArea(
 //           child: Center(
 //             child: SizedBox(
@@ -95,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: Center(
           child: SizedBox(

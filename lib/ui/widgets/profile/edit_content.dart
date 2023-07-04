@@ -14,8 +14,6 @@ class EditContent extends StatefulWidget {
 }
 
 class _EditContentState extends State<EditContent> {
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   File? selectedImage;
@@ -38,8 +36,6 @@ class _EditContentState extends State<EditContent> {
         if (userData.exists) {
           final userDataMap = userData.data() as Map<String, dynamic>;
           setState(() {
-            firstNameController.text = userDataMap['firstName'] ?? '';
-            lastNameController.text = userDataMap['lastName'] ?? '';
             usernameController.text = userDataMap['username'] ?? '';
             phoneNumberController.text = userDataMap['phoneNumber'] ?? '';
             profileImageUrl = userDataMap['profileImage'];
@@ -115,36 +111,6 @@ class _EditContentState extends State<EditContent> {
           height: 16,
         ),
         Spacer(),
-        Row(
-          children: [
-            Expanded(
-              child: ProfileInputField(
-                title: 'First Name',
-                initialValue: firstNameController.text,
-                onChanged: (value) {
-                  setState(() {
-                    firstNameController.text = value;
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Expanded(
-              child: ProfileInputField(
-                title: 'Last Name',
-                initialValue: lastNameController.text,
-                onChanged: (value) {
-                  setState(() {
-                    lastNameController.text = value;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-        Spacer(),
         ProfileInputField(
           title: 'Username',
           initialValue: usernameController.text,
@@ -185,12 +151,10 @@ class _EditContentState extends State<EditContent> {
             ),
           ),
           onPressed: () {
-            final String firstName = firstNameController.text;
-            final String lastName = lastNameController.text;
             final String username = usernameController.text;
             final String phoneNumber = phoneNumberController.text;
 
-            updateUserInformation(firstName, lastName, username, phoneNumber);
+            updateUserInformation(username, phoneNumber);
           },
           child: Text(
             'Save Change',
@@ -204,8 +168,6 @@ class _EditContentState extends State<EditContent> {
   }
 
   void updateUserInformation(
-    String firstName,
-    String lastName,
     String username,
     String phoneNumber,
   ) async {
@@ -221,16 +183,6 @@ class _EditContentState extends State<EditContent> {
           'username': username,
           'phoneNumber': phoneNumber,
         };
-
-        // Add first name if not empty
-        if (firstName.isNotEmpty) {
-          updateData['firstName'] = firstName;
-        }
-
-        // Add last name if not empty
-        if (lastName.isNotEmpty) {
-          updateData['lastName'] = lastName;
-        }
 
         // Upload image if selected
         if (selectedImage != null) {

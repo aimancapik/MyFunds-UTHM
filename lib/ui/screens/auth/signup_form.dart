@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../routes/routes.dart';
-import '../../../theme/app_color.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm();
@@ -131,13 +130,13 @@ class _SignupFormState extends State<SignupForm> {
           Text(
             'Create new',
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           Text(
             'Account',
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                 ),
           ),
           SizedBox(
@@ -308,7 +307,7 @@ class _SignupFormState extends State<SignupForm> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                AppColor.kPrimaryColor,
+                Colors.blue,
               ),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,18 +7,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../bloc/payment/payment_bloc.dart';
 import '../../../../routes/routes.dart';
-import '../../../../theme/app_color.dart';
 import '../../../widgets/home/payment_method_widget.dart';
+import 'MyHomeScreen.dart';
 
-class DonationScreen extends StatelessWidget {
-  DonationScreen(this.total);
+class DonationScreen extends StatefulWidget {
+  final ApprovedCard approvedCard;
 
   final String total;
 
+  DonationScreen({super.key, required this.approvedCard, required this.total});
+
+  @override
+  State<DonationScreen> createState() => _DonationScreenState();
+}
+
+class _DonationScreenState extends State<DonationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor: Colors.blue,
       body: Column(
         children: [
           Expanded(
@@ -46,18 +55,20 @@ class DonationScreen extends StatelessWidget {
                             child: SvgPicture.asset(
                               'assets/images/back.svg',
                               width: 24.w,
-                              color: AppColor.kTitle,
+                              color: Colors.grey
                             ),
                           ),
                         ),
                         Expanded(
                           child: Text(
                             'Donation Detail',
-                            style:
-                                Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                      color: AppColor.kTitle,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -79,11 +90,11 @@ class DonationScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 8.r,
                               ),
-                              color: AppColor.kPlaceholder1,
+                              color: Colors.grey
                             ),
                             child: Center(
-                              child: Image.asset(
-                                'assets/images/rumahorangtua.jpg',
+                              child: Image.network(
+                                widget.approvedCard.imageURL,
                                 width: 100,
                                 fit: BoxFit.cover,
                               ),
@@ -98,15 +109,15 @@ class DonationScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  'Rumah Kebajikan Orang Tua Parit Raja',
+                                  widget.approvedCard.campaignTitle,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                   ),
                                 ),
                                 Text(
-                                  'Kelab Kebajikan & Kebudayaan UTHM',
+                                  widget.approvedCard.organization,
                                   style: TextStyle(
-                                    color: AppColor.kTextColor1,
+                                    color: Colors.grey,
                                   ),
                                 ),
                               ],
@@ -119,7 +130,7 @@ class DonationScreen extends StatelessWidget {
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          AppColor.kPrimaryColor,
+                          Colors.blue,
                         ),
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
@@ -145,7 +156,7 @@ class DonationScreen extends StatelessWidget {
                       'Payment Method',
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontSize: 18.sp,
-                            color: AppColor.kTitle,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -175,11 +186,13 @@ class DonationScreen extends StatelessWidget {
                             style: Theme.of(context).textTheme.titleLarge),
                         Spacer(),
                         Text(
-                          '\RM$total',
-                          style:
-                              Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          '\RM${widget.total}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ],
                     )
@@ -203,7 +216,7 @@ class DonationScreen extends StatelessWidget {
                   ),
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                   foregroundColor: MaterialStateProperty.all(
-                    AppColor.kPrimaryColor,
+                    Colors.blue,
                   ),
                   minimumSize: MaterialStateProperty.all(
                     Size(
@@ -218,6 +231,7 @@ class DonationScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  updatehistory(widget.approvedCard);
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -242,10 +256,12 @@ class DonationScreen extends StatelessWidget {
                           ),
                           Text(
                             'Thank You',
-                            style:
-                                Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           SizedBox(
                             height: 8.h,
@@ -261,7 +277,7 @@ class DonationScreen extends StatelessWidget {
                           ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                AppColor.kPrimaryColor,
+                                Colors.blue,
                               ),
                               shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
@@ -297,5 +313,32 @@ class DonationScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void updatehistory(ApprovedCard approvedCard) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('history')
+          .add({
+        'campaignTitle': approvedCard.campaignTitle,
+        'value': widget.total,
+        'organizer': approvedCard.organization,
+      });
+    }
+  }
+
+  void updateTotalAmount(ApprovedCard approvedCard) {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('approvedCampaign')
+          .doc(user.uid)
+          .update({
+        'TotalDuit': widget.total + 'TotalDuit',
+      });
+    }
   }
 }

@@ -13,5 +13,5 @@ class AppColor {
 
   static const kTextColor1 = Color(0xFFC9C9C9);
   static const kTextColor2 = Color(0xFFDEDEDE);
-  static const kTitle = Color(0xFF3B3B3B);
+  static const kTitle = Color.fromARGB(255, 58, 58, 58);
 }

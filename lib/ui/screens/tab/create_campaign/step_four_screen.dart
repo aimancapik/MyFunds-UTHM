@@ -17,111 +17,102 @@ class StepFourScreen extends StatefulWidget {
 class _StepFourScreenState extends State<StepFourScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneNoController = TextEditingController();
-  var _isChecked = true;
+  var _isChecked = "false";
+  var baru = false;
 
   void _navigateToNextScreen() {
-  if (_formKey.currentState!.validate()) {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      FirebaseFirestore.instance
-          .collection('requests')
-          .doc(user.uid)
-          .update({
-            'phoneNo': _phoneNoController.text,
-            'agreement': 'false',
-          })
-          .then((value) {
-            if (_isChecked) {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.r),
+    if (_formKey.currentState!.validate()) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance.collection('requests').doc(user.uid).update({
+          'phoneNo': _phoneNoController.text,
+          'agreement': _isChecked,
+        }).then((value) {
+          if (_isChecked == "false") {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32.r),
+              ),
+              builder: (_) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewPadding.bottom,
+                  top: 32.h,
+                  left: 16.w,
+                  right: 16.w,
                 ),
-                builder: (_) => Padding(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewPadding.bottom,
-                    top: 32.h,
-                    left: 16.w,
-                    right: 16.w,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: 64.h),
-                      SvgPicture.asset(
-                        'assets/images/check.svg',
-                      ),
-                      SizedBox(height: 8.h),
-                      Text(
-                        'Successful',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                      ),
-                      SizedBox(height: 8.h),
-                      Text(
-                        'Your campaign registration is sent to our admin to review. '
-                        '\nNotification will be given to you in dashboard once your campaign is approved or not',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 80.h),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blue),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 64.h),
+                    SvgPicture.asset(
+                      'assets/images/check.svg',
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Successful',
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
                           ),
-                          minimumSize: MaterialStateProperty.all(
-                            Size(
-                              double.infinity,
-                              56.h,
-                            ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Your campaign registration is sent to our admin to review. '
+                      '\nNotification will be given to you in dashboard once your campaign is approved or not',
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 80.h),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                         ),
-                        onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            RouteGenerator.main,
-                            (route) => false,
-                          );
-                        },
-                        child: Text('Home'),
+                        minimumSize: MaterialStateProperty.all(
+                          Size(
+                            double.infinity,
+                            56.h,
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          RouteGenerator.main,
+                          (route) => false,
+                        );
+                      },
+                      child: Text('Home'),
+                    ),
+                  ],
                 ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Please agree to the terms and conditions.'),
-                ),
-              );
-            }
-          })
-          .catchError((error) {
-            // Error handling
-            print('Error updating document: $error');
-          });
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Please agree to the terms and conditions.'),
+              ),
+            );
+          }
+        }).catchError((error) {
+          // Error handling
+          print('Error updating document: $error');
+        });
+      }
+    } else {
+      // Field validation failed, show error messages or prompt user to fill in required fields.
+      setState(() {
+        // Set error flags or show error messages.
+      });
     }
-  } else {
-    // Field validation failed, show error messages or prompt user to fill in required fields.
-    setState(() {
-      // Set error flags or show error messages.
-    });
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -196,10 +187,11 @@ class _StepFourScreenState extends State<StepFourScreen> {
                           Row(
                             children: [
                               Checkbox(
-                                value: _isChecked,
+                                value: baru,
                                 onChanged: (value) {
                                   setState(() {
-                                    _isChecked = value!;
+                                    // _isChecked = "true";
+                                    baru = !baru;
                                   });
                                 },
                               ),
@@ -221,12 +213,14 @@ class _StepFourScreenState extends State<StepFourScreen> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
-                                          .copyWith(fontWeight: FontWeight.bold),
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
                                     ),
                                     content: Text(
                                       _termsAndConditionsText,
-                                      style:
-                                          Theme.of(context).textTheme.bodyMedium,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
                                     ),
                                     actions: [
                                       ElevatedButton(

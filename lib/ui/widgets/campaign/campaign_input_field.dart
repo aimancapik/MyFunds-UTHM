@@ -66,7 +66,7 @@ class CampignInputField extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           8.r,
                         ),
-                        color: AppColor.kPrimaryColor,
+                        color: Colors.blue,
                       ),
                       child: Center(
                         child: SvgPicture.asset(

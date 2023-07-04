@@ -88,7 +88,7 @@ class _CalculatorState extends State<Calculator> {
               Text(
                 '\RM',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: AppColor.kPrimaryColor,
+                      color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -96,7 +96,7 @@ class _CalculatorState extends State<Calculator> {
                 constructMoney(),
                 style: TextStyle(
                   fontSize: 40.sp,
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
               )
@@ -279,7 +279,7 @@ class _CalculatorState extends State<Calculator> {
         child: Text(
           '000',
           style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: AppColor.kPrimaryColor,
+                color: Colors.blue,
               ),
         ),
       ),
@@ -300,7 +300,7 @@ class _CalculatorState extends State<Calculator> {
         child: Text(
           '$index',
           style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                color: AppColor.kPrimaryColor,
+                color: Colors.blue,
               ),
         ),
       ),

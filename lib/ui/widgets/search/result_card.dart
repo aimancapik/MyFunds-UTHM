@@ -55,7 +55,18 @@ final List<Result> results = [
 ];
 
 class ResultCard extends StatelessWidget {
-  const ResultCard(this.result, String campaignDescription, String fundsTarget, String faculty, String startDate, String campaignType, String organization, String phoneNo, String endDate, String personInCharge, String recipients);
+  const ResultCard(
+      this.result,
+      String campaignDescription,
+      String fundsTarget,
+      String faculty,
+      String startDate,
+      String campaignType,
+      String organization,
+      String phoneNo,
+      String endDate,
+      String personInCharge,
+      String recipients);
 
   final Result result;
 
@@ -126,7 +137,7 @@ class ResultCard extends StatelessWidget {
                       height: 4.w,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColor.kPrimaryColor,
+                        color: Colors.blue,
                       ),
                     ),
                     SizedBox(
@@ -161,7 +172,7 @@ class ResultCard extends StatelessWidget {
                                   width: 8,
                                   decoration: ShapeDecoration(
                                     shape: StadiumBorder(),
-                                    color: AppColor.kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                                 ),
                               ),

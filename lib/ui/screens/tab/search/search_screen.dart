@@ -159,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Category(),
+        // Category(),
         SizedBox(
           height: 16.h,
         ),

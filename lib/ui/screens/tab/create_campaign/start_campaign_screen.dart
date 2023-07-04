@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../models/campaign.dart';
 import '../../../../routes/routes.dart';
-import '../../../../theme/app_color.dart';
 import '../../../widgets/campaign/category_card.dart';
 import '../../../widgets/campaign/campaign_screen_path.dart';
 
@@ -23,17 +22,22 @@ class _StartCampaignState extends State<StartCampaign> {
   void saveCampaignType(String campaignType) {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      FirebaseFirestore.instance
-          .collection('requests')
-          .doc(user.uid)
-          .set({'campaignType': campaignType});
+      final userId = user.uid; // Get the user ID
+
+      FirebaseFirestore.instance.collection('requests').doc(userId).set({
+        'userId': userId, // Set the user ID in the document
+        'campaignType': campaignType
+      });
     }
   }
 
   void deleteRequest() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      FirebaseFirestore.instance.collection('requests').doc(user.uid).delete();
+      FirebaseFirestore.instance
+          .collection('requests')
+          .doc(user.uid)
+          .update({'userId': null, 'campaignType': null});
     }
   }
 
@@ -50,8 +54,8 @@ class _StartCampaignState extends State<StartCampaign> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context)
-                  .pop(true); // User confirmed to discard changes
+              Navigator.of(context).pop(true);
+              deleteRequest(); // User confirmed to discard changes
             },
             child: Text('Yes'),
           ),
@@ -111,7 +115,7 @@ class _StartCampaignState extends State<StartCampaign> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        backgroundColor: AppColor.kPrimaryColor,
+        backgroundColor: Colors.blue,
         body: Stack(
           children: [
             Column(
@@ -249,7 +253,7 @@ class _StartCampaignState extends State<StartCampaign> {
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
-                      color: AppColor.kPrimaryColor,
+                      color: Colors.blue,
                     ),
                   ),
                 )
@@ -267,7 +271,7 @@ class _StartCampaignState extends State<StartCampaign> {
                     shape: MaterialStateProperty.all(CircleBorder()),
                     minimumSize: MaterialStateProperty.all(Size(0, 0)),
                     backgroundColor: MaterialStateProperty.all(
-                      AppColor.kPrimaryColor,
+                      Colors.blue,
                     ),
                     elevation: MaterialStateProperty.all(0),
                   ),

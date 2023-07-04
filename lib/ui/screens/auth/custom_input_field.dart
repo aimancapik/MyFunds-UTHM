@@ -27,7 +27,7 @@ class CustomInputField extends StatelessWidget {
       controller: controller,
       textInputAction: textInputAction,
       onFieldSubmitted: onSubmitted,
-      cursorColor: AppColor.kPrimaryColor,
+      cursorColor: Colors.blue,
       style: Theme.of(context).textTheme.bodyMedium,
       validator: validator, // Assign the validator function
       decoration: InputDecoration(

@@ -195,14 +195,17 @@ class _StepThreeScreenState extends State<StepThreeScreen> {
               ),
               SizedBox(height: 16.h),
               Text(
-                'Description',
+                'Your campaign description',
               ),
               SizedBox(height: 8.h),
               Form(
+                
                 key: _formKey,
                 child: Container(
+                  
                   height: 200.h,
                   child: TextFormField(
+                   
                     controller: _descriptionController,
                     maxLines: null,
                     textAlignVertical: TextAlignVertical.top,
@@ -213,7 +216,7 @@ class _StepThreeScreenState extends State<StepThreeScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
+                    decoration: InputDecoration(hintText: 'Tell the audience your story',
                       filled: true,
                       fillColor: AppColor.kPlaceholder2,
                       border: OutlineInputBorder(

@@ -10,7 +10,7 @@ class ForgetPwScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kPrimaryColor,
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -54,7 +54,7 @@ class ForgetPwScreen extends StatelessWidget {
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
-                                    color: AppColor.kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                             ),
                             Text(
@@ -63,7 +63,7 @@ class ForgetPwScreen extends StatelessWidget {
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
-                                    color: AppColor.kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                             ),
                             SizedBox(
@@ -176,7 +176,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                AppColor.kPrimaryColor,
+                Colors.blue,
               ),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(

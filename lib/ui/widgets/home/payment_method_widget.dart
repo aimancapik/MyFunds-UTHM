@@ -48,7 +48,7 @@ class PaymentMethodWidget extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: state.index == index
-                        ? AppColor.kPrimaryColor
+                        ? Colors.blue
                         : AppColor.kPlaceholder2,
                     width: 2.sp,
                   ),
@@ -60,7 +60,7 @@ class PaymentMethodWidget extends StatelessWidget {
                           height: 16.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColor.kPrimaryColor,
+                            color: Colors.blue,
                           ),
                         )
                       : Container(),
@@ -76,7 +76,7 @@ class PaymentMethodWidget extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 decoration: BoxDecoration(
                   color: state.index == index
-                      ? AppColor.kPrimaryColor
+                      ? Colors.blue
                       : AppColor.kPlaceholder2,
                   borderRadius: BorderRadius.circular(
                     12.r,

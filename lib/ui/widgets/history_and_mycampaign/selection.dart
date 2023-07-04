@@ -15,7 +15,7 @@ class Selection extends StatelessWidget {
       height: 60.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        color: AppColor.kPrimaryColor.withOpacity(0.3),
+        color: Colors.blue.withOpacity(0.3),
       ),
       child: Row(
         children: [
@@ -41,11 +41,11 @@ class Selection extends StatelessWidget {
                     curve: AppAnimation.kAnimationCurve,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.r),
-                      color: state.isDonation ? AppColor.kPrimaryColor : null,
+                      color: state.isDonation ? Colors.blue : null,
                     ),
                     child: Center(
                       child: Text(
-                        'Donation',
+                        'My Donation',
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class Selection extends StatelessWidget {
                   curve: AppAnimation.kAnimationCurve,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
-                    color: !state.isDonation ? AppColor.kPrimaryColor : null,
+                    color: !state.isDonation ? Colors.blue : null,
                   ),
                   child: Center(
                     child: Text(

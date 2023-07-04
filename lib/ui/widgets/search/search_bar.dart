@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
           controller: controller,
           textInputAction: textInputAction,
           onSubmitted: onSubmitted,
-          cursorColor: AppColor.kPrimaryColor,
+          cursorColor: Colors.blue,
           style: Theme.of(context).textTheme.bodyMedium,
           decoration: InputDecoration(
               filled: true,
@@ -59,7 +59,7 @@ class SearchBar extends StatelessWidget {
                 width: 40.h,
                 height: 40.h,
                 decoration: BoxDecoration(
-                  color: AppColor.kPrimaryColor,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(
                     8.r,
                   ),
